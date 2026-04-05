@@ -1,0 +1,13 @@
+# Files to exclude from npm package
+src/
+*.ts
+!*.d.ts
+!public-api.d.ts
+tsconfig.lib.json
+tsconfig.spec.json
+karma.conf.js
+test.ts
+.storybook/
+*.stories.ts
+[!dist]*
+README.md

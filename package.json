@@ -1,0 +1,55 @@
+{
+  "name": "@tasktrack/reusable-table",
+  "version": "1.0.0",
+  "description": "Reusable Angular table with inline edit, selection, insert, delete, export, and print features",
+  "author": "Santhosh",
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/reusable-table",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/reusable-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/reusable-table/issues"
+  },
+  "keywords": [
+    "angular",
+    "table",
+    "component",
+    "data-table",
+    "crud",
+    "export",
+    "print",
+    "enterprise"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "@angular/material": "^18.0.0",
+    "@angular/cdk": "^18.0.0",
+    "@angular/forms": "^18.0.0",
+    "jspdf": "^4.1.0",
+    "jspdf-autotable": "^5.0.7",
+    "xlsx": "^0.18.5"
+  },
+  "sideEffects": false,
+  "module": "fesm2022/tasktrack-reusable-table.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/tasktrack-reusable-table.mjs",
+      "esm": "./esm2022/tasktrack-reusable-table.mjs",
+      "default": "./fesm2022/tasktrack-reusable-table.mjs"
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy in full compilation mode. This is not allowed.\\nPlease delete and rebuild the package with Ivy partial compilation mode, before attempting to publish.\\n')\" && exit 1"
+  }
+}
