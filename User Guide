@@ -1,0 +1,122 @@
+## 📘 User Guide
+
+This guide will help you quickly integrate and use the reusable table component in your Angular application.
+
+---
+
+### 🔹 Step 1: Install the Package
+
+```bash
+npm install @tasktrack/reusable-table
+```
+
+---
+
+### 🔹 Step 2: Import the Module
+
+Add the module to your Angular app:
+
+```ts
+import { ReusableTableModule } from '@tasktrack/reusable-table';
+
+@NgModule({
+  imports: [ReusableTableModule]
+})
+export class AppModule {}
+```
+
+---
+
+### 🔹 Step 3: Define Table Columns
+
+Columns control what is displayed in the table.
+
+```ts
+columns = [
+  { key: 'id', label: 'ID' },
+  { key: 'name', label: 'Name' },
+  { key: 'email', label: 'Email' }
+];
+```
+
+---
+
+### 🔹 Step 4: Provide Table Data
+
+Pass an array of objects as table data.
+
+```ts
+data = [
+  { id: 1, name: 'John Doe', email: 'john@example.com' },
+  { id: 2, name: 'Jane Doe', email: 'jane@example.com' }
+];
+```
+
+---
+
+### 🔹 Step 5: Use the Component
+
+```html
+<app-reusable-table
+  [columns]="columns"
+  [data]="data"
+  (action)="handleAction($event)">
+</app-reusable-table>
+```
+
+---
+
+### 🔹 Step 6: Handle Actions
+
+The table emits events when user interacts with action buttons.
+
+```ts
+handleAction(event: any) {
+  console.log(event);
+
+  // Example:
+  // event.type => 'edit' | 'delete' | 'view'
+  // event.row => selected row data
+}
+```
+
+---
+
+### 🔹 Inputs
+
+| Input   | Type  | Description           |
+| ------- | ----- | --------------------- |
+| columns | Array | Defines table columns |
+| data    | Array | Data to be displayed  |
+
+---
+
+### 🔹 Outputs
+
+| Output | Description                            |
+| ------ | -------------------------------------- |
+| action | Emits when an action button is clicked |
+
+---
+
+### 🔹 Tips
+
+* You can dynamically update columns and data
+* Works seamlessly with Angular Material themes
+* Extendable for custom actions and features
+
+---
+
+### 🔹 Common Issues
+
+* Make sure Angular Material is installed
+* Ensure Angular version matches library version (Angular 18+)
+* Import the module correctly
+
+---
+
+### 🔹 Best Practice
+
+* Keep data structure consistent with column keys
+* Handle actions in a centralized method
+* Use clean UI for better readability
