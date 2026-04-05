@@ -1,0 +1,33 @@
+@use 'styleconstants' as *;
+
+/* ───────────────────────── STICKY HEADER ───────────────────────── */
+.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: $primary-blue;
+}
+
+.mat-mdc-header-cell {
+  background: $primary-blue !important;
+  color: $text-white !important;
+}
+
+/* ───────────────────────── TABLE LAYOUT ───────────────────────── */
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+
+/* ───────────────────────── DARK THEME ───────────────────────── */
+// :host-context(html[data-theme="dark"]) .mat-mdc-row {
+//   background: var(--table-bg) !important;
+// }
+
+/* ───────────────────────── TABLE SCROLL WRAPPER ───────────────────────── */
+.table-scroll-wrapper {
+  overflow: auto;      
+  position: relative;  
+}
+

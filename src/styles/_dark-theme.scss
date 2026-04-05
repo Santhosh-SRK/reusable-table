@@ -1,0 +1,306 @@
+@use 'styleconstants' as *;
+
+/* LIGHT MODE TABLE ROW HOVER */
+.mat-mdc-row:hover {
+  background: rgba(37, 99, 235, 0.08) !important;
+  /* Light blue hover */
+}
+
+/*LOGIN PAGE DARK THEME*/
+html[data-theme="dark"] {
+
+  --app-bg: #{$dark-app-surface};
+  --app-surface: #{$dark-app-surface};
+  --app-text: #ffffff;
+  --card-bg: #{$card-bg-dark};
+  --card-border: #{$card-border-dark};
+
+  --login-bg: linear-gradient(135deg,
+      rgba(8, 30, 45, 0.35),
+      rgba(10, 55, 60, 0.35)),
+    radial-gradient(circle at top,
+      rgba(255, 255, 255, 0.12),
+      rgba(0, 0, 0, 0.65)),
+    url('/images/bagroundImage.jpg') center / cover no-repeat;
+
+  --table-bg: #{$card-bg-dark};
+  --role-card-bg: #{$card-bg-dark};
+
+  --mat-app-surface: #{$dark-layout-surface};
+  --mat-table-background-color: #{$dark-layout-surface};
+
+
+  // color: #ffffff;
+
+  label,
+  .mat-mdc-form-field-label,
+  .mat-mdc-list-item,
+  .toggle-text {
+    color: #ffffff !important;
+  }
+
+  .role-card {
+    background: var(--card-bg) !important;
+  }
+
+  .mat-tree {
+    display: block;
+    padding: #{$spacing-md-100};
+    border-radius: #{$radius-md-75};
+    background: var(--card-bg) !important;
+    border: 1px solid #{$text-white} !important;
+  }
+}
+
+/*OTHER PAGES DARK THEME*/
+html[data-theme="dark"] app-main-layout {
+
+  /* Use only tokens from styleconstants */
+
+  --app-bg: #{$dark-layout-bg};
+  --app-surface: #{$dark-layout-surface};
+  --card-bg: #{$dark-layout-surface};
+  --card-border: #{$dark-layout-border};
+  --app-text: #{$dark-layout-text};
+
+  background: var(--app-bg);
+  color: var(--app-text);
+
+  /* 👇 IMPORTANT: Remove global span/div override */
+  body {
+    color: var(--app-text);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  small {
+    color: var(--app-text) !important;
+  }
+
+  .card,
+  .mattable-container,
+  .role-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+  }
+
+  .company-name {
+    color: var(--app-text) !important;
+  }
+
+  .mattable-toolbar {
+    background: var(--card-bg) !important;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .mat-button-toggle-label-content {
+    color: var(--app-text) !important;
+  }
+
+  .mat-button-toggle-checked {
+    background: rgba(169, 169, 189, 0.915);
+  }
+
+  .mattable-toolbar p {
+    color: var(--app-text) !important;
+  }
+
+  .bg-light {
+    background: rgba(37, 99, 235, 0.12) !important;
+  }
+
+  .alert {
+    background: rgba(37, 99, 235, 0.15) !important;
+    border-color: rgba(37, 99, 235, 0.25) !important;
+  }
+
+  mat-icon {
+    color: var(--app-text) !important;
+  }
+
+  // ── Preserve action button icon colors in dark theme ──
+  .actions-cell button[mattooltip="Edit"] mat-icon {
+    color: #4caf50 !important;  // text-success green
+  }
+
+  .actions-cell button[mattooltip="Role Rights"] mat-icon {
+    color: #2196f3 !important;  // text-primary blue
+  }
+
+  .actions-cell button[mattooltip="Reset Password"] mat-icon {
+    color: #f44336 !important;  // text-danger red
+  }
+
+  .mat-mdc-select-arrow-wrapper,
+  button[mat-icon-button] mat-icon {
+    color: var(--app-text) !important;
+  }
+
+  .mat-datepicker-toggle-default-icon {
+    color: var(--app-text) !important;
+    fill: var(--app-text) !important;
+  }
+
+  .app-btn-upload {
+    background: rgba(56, 189, 248, 0.16) !important;
+    color: #e0f2fe !important;
+    border: 1px solid rgba(125, 211, 252, 0.38) !important;
+    box-shadow: 0 4px 12px rgba(8, 47, 73, 0.28) !important;
+  }
+
+  .app-btn-upload:hover {
+    background: rgba(56, 189, 248, 0.24) !important;
+    color: #f8fdff !important;
+    box-shadow: 0 6px 16px rgba(8, 47, 73, 0.36) !important;
+  }
+
+  .mat-mdc-select-arrow {
+    color: var(--app-text) !important;
+  }
+
+  .mat-mdc-header-cell {
+    color: var(--app-text) !important;
+    font-weight: $font-weight-normal-400;
+    letter-spacing: 0.4px;
+  }
+
+  .mat-mdc-paginator .mat-mdc-select-value {
+    color: var(--app-text) !important;
+  }
+
+  .mat-mdc-row {
+    background: var(--card-bg);
+    // border-bottom: 1px solid var(--card-border);
+  }
+
+  .mat-mdc-row:hover {
+    background: #{$dark-layout-hover};
+  }
+
+  .table-container {
+    --zebra-color: #dedede !important;
+    --hover-color: #3e3f405a !important;
+    // --selected-row-color: #4acf74 !important;
+    // --selectedRowColor: #4acf74 !important;
+    color: var(--app-text) !important;
+  }
+
+  .mat-mdc-cell {
+    color: var(--app-text) !important;
+  }
+
+  .mat-mdc-paginator {
+    background: var(--card-bg) !important;
+    border-top: 1px solid var(--card-border);
+    color: var(--app-text) !important;
+  }
+
+  .role-top-header {
+    background: var(--card-bg) !important;
+    border-bottom: 1px solid var(--card-border);
+    color: var(--app-text) !important;
+  }
+
+  .role-header-blue {
+    background: $sidebar-gradient !important;
+    color: $text-white !important;
+  }
+
+  .mat-tree,
+  .mat-tree-node,
+  .mat-nested-tree-node,
+  .mat-checkbox-label {
+    color: var(--app-text) !important;
+    background: var(--card-bg) !important;
+  }
+
+  .mat-mdc-form-field-label,
+  .mat-mdc-floating-label {
+    color: #{$dark-layout-muted} !important;
+  }
+
+  .mat-mdc-input-element {
+    color: var(--app-text) !important;
+  }
+
+  /* Disabled form fields - dark theme fix */
+  .mat-mdc-form-field-disabled {
+    opacity: 0.85 !important;
+  }
+
+  .mat-mdc-form-field.mat-form-field-disabled .mat-mdc-input-element {
+    color: rgba(115, 112, 112, 0.85) !important;
+  }
+
+  .mat-mdc-form-field.mat-form-field-disabled .mat-mdc-floating-label {
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+
+  .mat-mdc-form-field.mat-form-field-disabled .mdc-notched-outline__leading,
+  .mat-mdc-form-field.mat-form-field-disabled .mdc-notched-outline__notch,
+  .mat-mdc-form-field.mat-form-field-disabled .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.35) !important;
+  }
+
+  /* Remove vertical divider line in outline */
+  .mat-mdc-form-field.mat-form-field-disabled .mdc-notched-outline__notch {
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  .mat-mdc-form-field.mat-form-field-disabled .mdc-notched-outline__leading {
+    border-right: none !important;
+  }
+
+  .mat-mdc-form-field.mat-form-field-disabled .mdc-notched-outline__trailing {
+    border-left: none !important;
+  }
+
+  body,
+  .container-fluid,
+  .row {
+    background: transparent !important;
+  }
+
+  .sidenav mat-icon,
+  .sidebar-menu-icon {
+    color: $sidebar-text-dark !important;
+  }
+
+  /* Search icon in toolbar */
+  .mattable-toolbar button[aria-label="Search"] mat-icon {
+    color: #ffffff !important;
+  }
+
+  .company-grid-wrapper {
+    background: var(--card-bg) !important;
+  }
+
+  .company-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    color: var(--app-text) !important;
+  }
+
+  .company-card.active-company {
+    background: linear-gradient(135deg,
+        $primary-green,
+        $primary-green-dark ) !important;
+
+    border: 2px solid $primary-green !important;
+    color: $text-white !important;
+    box-shadow: $shadow-medium !important;
+  }
+
+  @media (max-width: 768px) {
+    .mattable-container .cell-label {
+      color: #{$dark-app-text} !important;
+    }
+  }
+}

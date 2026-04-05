@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$blue-palette,
+  ),
+  density: (
+    scale: -4 //0 is default, -1 is comfortable, -2 is compact, -3 is dense compact for input fields and mat buttons
+  )
+));
+
+:root {
+  @include mat.all-component-themes($my-theme);
+  @include mat.button-toggle-density(-3);
+//   @include mat.select-density(-3);
+//   @include mat.form-field-density(-3);
+//   --mat-form-field-container-height: 32px;
+//   --mat-form-field-container-vertical-padding: 4px;
+
+}

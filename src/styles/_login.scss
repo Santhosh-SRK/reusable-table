@@ -1,0 +1,20 @@
+@use 'styleconstants' as *;
+
+.login-page {
+  min-height: 100vh;
+  background: var(--login-bg);
+  background-size: cover;
+  background-position: center;
+}
+
+.card-glass {
+  width: 100%;
+  max-width: 28rem;
+  padding: $spacing-3xl-250 $spacing-2xl-200;
+  border-radius: $radius-lg-125;
+  backdrop-filter: blur(1.25rem) saturate(180%);
+  border: 1px solid var(--card-border);
+  box-shadow: $shadow-strong,
+              0 0 0 1px var(--card-inset-shadow) inset;
+  color: var(--app-text);
+}

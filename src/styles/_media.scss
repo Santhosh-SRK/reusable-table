@@ -1,0 +1,153 @@
+@use 'styleconstants' as *;
+
+mat-toolbar {
+    background: var(--toolbar-bg) !important;
+    color: var(--toolbar-text) !important;
+    height: 64px !important;
+    min-height: 64px !important;
+}
+
+/* ───────────────────────── MATTABLE TOOLBAR BASE ───────────────────────── */
+
+.mattable-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 8px;
+    border-bottom: 1px solid $card-border;
+    flex-wrap: wrap;
+}
+
+.mattable-toolbar .right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.mattable-toolbar>.left {
+    display: flex;
+    align-items: center;
+}
+
+.mattable-toolbar>.center {
+    margin: 0 auto;
+}
+
+/* ───────────────────────── TABLE DEFAULT (DESKTOP) ───────────────────────── */
+
+.mattable-container .cell-label {
+    display: none;
+}
+
+/* ───────────────────────── RESPONSIVE (MOBILE) ───────────────────────── */
+
+@media (max-width: 768px) {
+
+
+    /* ===== Toolbar Responsive ===== */
+
+    .mattable-toolbar {
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+
+    .mattable-toolbar .center {
+        flex: 1;
+        text-align: center;
+    }
+
+    .mattable-toolbar .center p {
+        font-size: 13px;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .mattable-toolbar>.left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mattable-toolbar>.right {
+        flex-shrink: 0;
+    }
+
+    .mattable-toolbar mat-button-toggle-group {
+        transform: scale(0.85);
+        transform-origin: right center;
+    }
+
+    /* ===== Table Toggle Wrapper ===== */
+    .table-toggle-wrapper {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .mat-mdc-paginator {
+        display: none !important;
+    }
+
+    /* ===== Table Responsive ===== */
+
+    .mattable-container .desktop-only {
+        display: none;
+    }
+
+    .mattable-container .actions-cell {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .mattable-container .mat-mdc-header-row {
+        display: none !important;
+    }
+
+    .mattable-container .mat-mdc-row {
+        display: block !important;
+        margin: 4px 0;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fff;
+        height: auto !important;
+        min-height: unset !important;
+    }
+
+    .mattable-container .mat-mdc-cell {
+        display: flex !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100%;
+        padding: 8px 0 !important;
+        // border-bottom: 1px solid #eee;
+    }
+
+    .mattable-container .mat-mdc-footer-row {
+        display: none !important;
+    }
+
+    .mattable-container .cell-label {
+        flex: 0 0 40%;
+        display: block;
+        font-weight: 600;
+        color: #000000;
+        font-size: 0.75rem;
+    }
+
+    .mattable-container .cell-value {
+        margin-left: auto !important;
+        text-align: right !important;
+        min-width: 0;
+        font-variant-numeric: tabular-nums;
+    }
+    .table-container{
+        --row-selected: #4acf74 !important;
+    }
+    
+}

@@ -1,0 +1,317 @@
+<div class="mattable-container h-100 d-flex flex-column">
+  <!-- Enhanced Toolbar -->
+  <div class="mattable-toolbar d-flex align-items-center justify-content-between px-2 gap-2">
+    <!-- LEFT: Search Only -->
+    <div class="d-flex gap-2 align-items-center">
+      <!-- Search Icon / Input -->
+      <button *ngIf="!showSearch" mat-icon-button (click)="toggleSearch()" aria-label="Search"
+        [matTooltip]="tooltips.search || 'Search'">
+        <mat-icon>{{ icons.searchIcon || 'search' }}</mat-icon>
+      </button>
+
+      <div *ngIf="showSearch" class="search-wrapper">
+        <input #searchInput type="text" class="form-control form-control-sm pe-5 p-0" placeholder="Search..."
+          [value]="searchInputValue" (input)="onSearch(searchInput.value)" autofocus />
+        <button type="button"
+          class="btn-sm position-absolute top-50 end-0 translate-middle-y me-1 p-0 border-0 bg-transparent align-items-center d-flex"
+          (click)="clearSearch()">
+          <mat-icon>{{ icons.closeIcon || 'close' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- CENTER: Selected Count (if row selection enabled) -->
+    <div class="selection-info" [class.visible]="selectedRows.size > 0">
+      {{ selectedRows.size }} row(s) selected
+    </div>
+    <!-- RIGHT: All Actions (Add, Insert, Delete, Column Toggle, Export, Print) -->
+    <div class="d-flex gap-2 align-items-center">
+      <!-- Add Row Button -->
+      <button *ngIf="enableAdd" mat-icon-button (click)="onAdd()" [matTooltip]="tooltips.addRow || 'Add New Row'"
+        class="neutral-btn">
+        <mat-icon>{{ icons.addIcon || 'add' }}</mat-icon>
+      </button>
+
+      <!-- Insert Row Above Button -->
+      <button *ngIf="enableAdd && enableRowSelection" mat-icon-button (click)="insertRowAbove()"
+        [matTooltip]="tooltips.insertRowAbove || 'Insert Row Above'"
+        class="neutral-btn">
+        <mat-icon>{{ icons.insertAboveIcon || 'arrow_upward' }}</mat-icon>
+      </button>
+
+      <!-- Insert Row Below Button -->
+      <button *ngIf="enableAdd && enableRowSelection" mat-icon-button (click)="insertRowBelow()"
+        [matTooltip]="tooltips.insertRowBelow || 'Insert Row Below'"
+        class="neutral-btn">
+        <mat-icon>{{ icons.insertBelowIcon || 'arrow_downward' }}</mat-icon>
+      </button>
+
+      <!-- Delete Selected Rows Button -->
+      <button *ngIf="enableDelete" mat-icon-button [disabled]="selectedRows.size === 0"
+        (click)="onDeleteSelected()" 
+        [matTooltip]="tooltips.deleteRows || 'Delete Selected'" class="danger-btn">
+        <mat-icon>{{ icons.deleteIcon || 'delete' }}</mat-icon>
+      </button>
+
+      <!-- Column Toggle -->
+      <button *ngIf="enableColumnToggle && columns.length > 0" mat-icon-button (click)="toggleColumnPanel()"
+        [matMenuTriggerFor]="columnMenu" [matTooltip]="tooltips.toggleColumns || 'Toggle Columns'" class="neutral-btn">
+        <mat-icon>{{ icons.columnToggleIcon || 'view_column' }}</mat-icon>
+      </button>
+
+      <!-- Export Menu -->
+      <button *ngIf="enableExport" mat-icon-button [matMenuTriggerFor]="exportMenu"
+        [matTooltip]="tooltips.export || 'Export'" class="neutral-btn">
+        <mat-icon>{{ icons.exportIcon || 'file_download' }}</mat-icon>
+      </button>
+
+      <!-- Print Button -->
+      <button *ngIf="enablePrint" mat-icon-button (click)="printTable()" [matTooltip]="tooltips.print || 'Print'"
+        class="neutral-btn">
+        <mat-icon>{{ icons.printIcon || 'print' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrollable Table Wrapper with optional Virtual Scroll -->
+  <div class="table-scroll-wrapper flex-grow-1" [style.height.px]="tableMaxHeight"
+    *ngIf="(columns.length > 0 ? columnsToDisplay.length : displayedColumns?.length) && dataSource.data.length > 0">
+
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <!-- SELECTION COLUMN (for row checkboxes) -->
+      <ng-container *ngIf="enableRowSelection" matColumnDef="selection">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox [checked]="allRowsSelected" (change)="toggleSelectAll($event)">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox [checked]="isRowSelected(row)" (change)="toggleRowSelection(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- DYNAMIC COLUMNS (NEW CONFIG-BASED) -->
+      <ng-container *ngFor="let col of columns; trackBy: trackByColumnKey" [matColumnDef]="col.key">
+        <ng-container *ngIf="col.type !== 'action' || showActionColumn">
+        <th mat-header-cell *matHeaderCellDef [class.sortable]="col.sortable"
+          [mat-sort-header]="col.sortable ? col.key : null" [style.width]="getColumnWidth(col)"
+          [class.sticky-action-column]="enableStickyActions && col.type === 'action'">
+          <div class="column-header">
+            <div class="column-header-content">
+              <span>{{ col.label }}</span>
+            </div>
+
+            <!-- Column Filter Input (if filterable) -->
+            <input *ngIf="col.filterable" type="text" class="column-filter-input" placeholder="Filter..."
+              (input)="applyColumnFilter(col.key, $event)" (click)="$event.stopPropagation()" />
+          </div>
+
+          <!-- Column Resize Handle (if enabled) -->
+          <div *ngIf="enableColumnResize && col.key !== 'selection' && col.type !== 'action'" class="resize-handle"
+            (mousedown)="startColumnResize($event, col)" matTooltip="Drag to resize column">
+          </div>
+        </th>
+
+        <!-- Cell -->
+        <td mat-cell *matCellDef="let row; let rowIndex = index" [class.cell-value]="col.key !== 'Actions'"
+          [style.width]="getColumnWidth(col)"
+          [class.sticky-action-column]="enableStickyActions && col.type === 'action' && showActionColumn">
+          <!-- TEXT TYPE with INLINE EDITING support -->
+          <ng-container *ngIf="col.type !== 'action'">
+            <div class="cell-label">{{ col.label }}</div>
+
+            <!-- Inline Edit Mode -->
+            <div *ngIf="enableInlineEdit && isEditingCell(rowIndex, col.key)" class="inline-edit-container">
+              <!-- Text Input -->
+              <input *ngIf="col.inputType !== 'select' && col.inputType !== 'textarea'" type="text"
+                class="inline-edit-input" [(ngModel)]="editingValue" [type]="col.inputType || 'text'"
+                (keyup.enter)="saveInlineEdit(row, col)" (keyup.escape)="cancelInlineEdit()" autofocus />
+
+              <!-- Textarea -->
+              <textarea *ngIf="col.inputType === 'textarea'" class="inline-edit-input" [(ngModel)]="editingValue"
+                (keyup.enter)="saveInlineEdit(row, col)" (keyup.escape)="cancelInlineEdit()" autofocus>
+              </textarea>
+
+              <!-- Select dropdown -->
+              <select *ngIf="col.inputType === 'select'" class="inline-edit-input" [(ngModel)]="editingValue"
+                (change)="saveInlineEdit(row, col)" (blur)="cancelInlineEdit()">
+                <option [value]="null">-- Select --</option>
+                <option *ngFor="let opt of col.options; trackBy: trackByRowIndex" [value]="opt.value">
+                  {{ opt.label }}
+                </option>
+              </select>
+
+              <!-- Buttons: Save & Cancel -->
+              <div class="inline-edit-actions">
+                <button mat-icon-button (click)="saveInlineEdit(row, col)" matTooltip="Save" class="save-btn">
+                  <mat-icon>check</mat-icon>
+                </button>
+                <button mat-icon-button (click)="cancelInlineEdit()" matTooltip="Cancel" class="cancel-btn">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <!-- View Mode (double-click to edit) -->
+            <div *ngIf="!enableInlineEdit || !isEditingCell(rowIndex, col.key)" class="cell-content"
+              [class.editable-cell]="col.editable && enableInlineEdit"
+              (dblclick)="onCellDoubleClick(row, col, rowIndex, $event)" (mouseenter)="editingHoveredRow = rowIndex"
+              (mouseleave)="editingHoveredRow = null">
+              <span class="cell-value">{{ row[col.key] }}</span>
+              <!-- Edit icon only visible on hover for editable cells -->
+              <mat-icon *ngIf="col.editable && enableInlineEdit && editingHoveredRow === rowIndex"
+                class="edit-icon-hover">
+                edit
+              </mat-icon>
+            </div>
+          </ng-container>
+
+          <!-- ACTION TYPE (Dynamic Actions + Built-in Row Actions) -->
+          <ng-container *ngIf="col.type === 'action'">
+            <div class="cell-label">{{ col.label }}</div>
+            <div class="cell-value actions-cell">
+              <!-- Built-in Row Actions (configurable) -->
+              <!-- Edit Row -->
+              <button *ngIf="rowActions.enableEdit" mat-icon-button [matTooltip]="tooltips.editRow || 'Edit'"
+                matTooltipPosition="right" class="text-primary" (click)="onActionClicked('edit', row)">
+                <mat-icon>{{ icons.editIcon || 'edit' }}</mat-icon>
+              </button>
+
+              <!-- Delete Row -->
+              <button *ngIf="rowActions.enableDelete" mat-icon-button [matTooltip]="tooltips.deleteRow || 'Delete'"
+                matTooltipPosition="right" class="text-danger" (click)="onActionClicked('delete', row)">
+                <mat-icon>{{ icons.deleteIcon || 'delete' }}</mat-icon>
+              </button>
+
+              <!-- Insert Row Above -->
+              <button *ngIf="rowActions.enableInsertAbove" mat-icon-button
+                [matTooltip]="tooltips.insertAboveRow || 'Insert Above'" matTooltipPosition="right" class="text-primary"
+                (click)="onActionClicked('insertAbove', row)">
+                <mat-icon>{{ icons.insertAboveIcon || 'arrow_upward' }}</mat-icon>
+              </button>
+
+              <!-- Insert Row Below -->
+              <button *ngIf="rowActions.enableInsertBelow" mat-icon-button
+                [matTooltip]="tooltips.insertBelowRow || 'Insert Below'" matTooltipPosition="right" class="text-primary"
+                (click)="onActionClicked('insertBelow', row)">
+                <mat-icon>{{ icons.insertBelowIcon || 'arrow_downward' }}</mat-icon>
+              </button>
+
+              <!-- Custom Actions -->
+              <button *ngFor="let action of actions; trackBy: trackByActionId" mat-icon-button
+                [matTooltip]="action.label" matTooltipPosition="right" [ngClass]="action.color"
+                (click)="onActionClicked(action.action, row)">
+                <mat-icon>{{ action.icon }}</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </td>
+        </ng-container>
+      </ng-container>
+
+      <!-- LEGACY DYNAMIC COLUMNS (fallback for old displayedColumns input) -->
+      <ng-container *ngIf="columns.length === 0">
+        <ng-container *ngFor="let col of displayedColumns; trackBy: trackByString" [matColumnDef]="col">
+          <ng-container *ngIf="showActionColumn || col !== 'Actions'">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ col !== 'Actions' ? col : 'Actions' }}
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+              <ng-container *ngIf="col !== 'Actions'">
+                <div class="cell-label">{{ col }}</div>
+                <div class="cell-value">{{ row[col] }}</div>
+              </ng-container>
+
+              <ng-container *ngIf="col === 'Actions' && actions.length > 0">
+                <div class="cell-label">{{ col }}</div>
+                <div class="cell-value actions-cell">
+                  <button *ngFor="let action of actions"  mat-icon-button [matTooltip]="action.label"
+                    matTooltipPosition="right" [ngClass]="action.color" (click)="onActionClicked(action.action, row)">
+                    <mat-icon>{{ action.icon }}</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+
+              <!-- Legacy hardcoded actions (backward compatibility) -->
+              <ng-container *ngIf="col === 'Actions' && actions.length === 0">
+                <div class="cell-label">{{ col }}</div>
+                <div class="cell-value actions-cell">
+                  <button mat-icon-button matTooltip="Edit" matTooltipPosition="right"
+                    (click)="onActionClicked('Edit', row)">
+                    <mat-icon class="text-success">edit</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Role Rights" matTooltipPosition="right"
+                    (click)="onActionClicked('RoleRights', row)">
+                    <mat-icon class="text-primary">settings</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Reset Password" matTooltipPosition="right"
+                    (click)="onActionClicked('ResetPassword', row)">
+                    <mat-icon class="text-danger">lock_reset</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+            </td>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <!-- Header Row -->
+      <tr mat-header-row *matHeaderRowDef="columns.length > 0 ? columnsToDisplay : displayedColumns; sticky: true"></tr>
+
+      <!-- Data Row -->
+      <tr mat-row *matRowDef="let row; columns: columns.length > 0 ? columnsToDisplay : displayedColumns"
+        (click)="onRowClick(row)" class="cursor-pointer" [class.selected-row]="isRowSelected(row)">
+      </tr>
+    </table>
+  </div>
+
+  <!-- Empty State Message -->
+  <div *ngIf="dataSource.data.length === 0" class="d-flex align-items-center justify-content-center h-100 text-muted"
+    [style.height.px]="tableMaxHeight">
+    <div class="text-center p-4">
+      <mat-icon class="mb-2 empty-state__icon">person_off</mat-icon>
+      <p class="mb-0">No data available</p>
+    </div>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator *ngIf="showPaginator" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<!-- Column Toggle Menu -->
+<mat-menu #columnMenu="matMenu">
+  <div class="column-menu-header p-2 border-bottom">
+    <button mat-button (click)="showAllColumns()" class="w-100 text-start">
+      <mat-icon>check_circle</mat-icon>
+      <span>Show All</span>
+    </button>
+    <button mat-button (click)="hideAllColumns()" class="w-100 text-start">
+      <mat-icon>radio_button_unchecked</mat-icon>
+      <span>Hide All</span>
+    </button>
+  </div>
+  <button mat-menu-item *ngFor="let col of columns; trackBy: trackByColumnKey" (click)="toggleColumn(col)">
+    <mat-icon *ngIf="!col.hidden">check_box</mat-icon>
+    <mat-icon *ngIf="col.hidden">check_box_outline_blank</mat-icon>
+    <span>{{ col.label }}</span>
+  </button>
+</mat-menu>
+
+<!-- Export Menu -->
+<mat-menu #exportMenu="matMenu">
+  <button mat-menu-item (click)="exportExcel()">
+    <mat-icon>table_chart</mat-icon>
+    <span>Export to Excel</span>
+  </button>
+  <button mat-menu-item (click)="exportCSV()">
+    <mat-icon>description</mat-icon>
+    <span>Export to CSV</span>
+  </button>
+  <button mat-menu-item (click)="exportPDF()">
+    <mat-icon>picture_as_pdf</mat-icon>
+    <span>Export to PDF</span>
+  </button>
+</mat-menu>

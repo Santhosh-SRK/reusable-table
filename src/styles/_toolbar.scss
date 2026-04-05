@@ -1,0 +1,93 @@
+// @use 'styleconstants' as *;
+
+// mat-toolbar {
+//   background: var(--toolbar-bg) !important;
+//   color: var(--toolbar-text) !important;
+//   height: 64px !important;
+//   min-height: 64px !important;
+// }
+
+// /* ───────────────────────── MATTABLE TOOLBAR ───────────────────────── */
+// .mattable-toolbar {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 14px 18px;
+//   gap: 8px;
+//   border-bottom: 1px solid $card-border;
+//   flex-wrap: wrap;
+// }
+
+// .mattable-toolbar .right {
+//   margin-left: auto;
+//   display: flex;
+//   align-items: center;
+// }
+
+// .mattable-toolbar > .left {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .mattable-toolbar > .center {
+//   margin: 0 auto;
+// }
+
+// /* ───────────────────────── MATTABLE TOOLBAR RESPONSIVE ───────────────────────── */
+// @media (max-width: 768px) {
+//   .mattable-toolbar {
+//      display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     gap: 6px;
+//     flex-wrap: nowrap;
+//   }
+  
+//     .mattable-toolbar .center {
+//     flex: 1;
+//     text-align: center;
+//   }
+
+//   .mattable-toolbar .center p {
+//     font-size: 13px;
+//     margin: 0;
+//     white-space: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//   }
+
+  
+  
+//   .mattable-toolbar > .left {
+//     flex: 1;
+//     min-width: 0;
+//   }
+  
+//   .mattable-toolbar > .right {
+//     flex-shrink: 0;
+//   }
+//   .mattable-toolbar mat-button-toggle-group {
+//   transform: scale(0.85);
+//   transform-origin: right center;
+// }
+
+//   .mat-mdc-paginator {
+//     display: flex;
+//     justify-content: center;
+//   }
+
+//   .mat-mdc-paginator-container {
+//     justify-content: center !important;
+//     flex-wrap: wrap;
+//   }
+
+//   .mat-mdc-paginator-page-size {
+//     margin-right: 0 !important;
+//   }
+
+//   .mat-mdc-paginator-page-size-label {
+//     display: none;
+//   }
+
+// }
+

@@ -1,0 +1,39 @@
+mat-icon {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+mat-dialog-content {
+  margin: 16px 0;
+}
+
+mat-dialog-actions {
+  margin-top: 16px;
+}
+
+/* Global spinner overlay styles */
+.global-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.global-spinner .spinner-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+
+.global-spinner .spinner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

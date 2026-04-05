@@ -1,0 +1,40 @@
+@use 'styleconstants' as *;
+
+:root {
+  --density-scale: 0.85;
+
+  --sidebar-width-collapsed: #{$sidebar-width-collapsed};
+  --sidebar-width-expanded: #{$sidebar-width-expanded};
+  --sidebar-width-mobile: #{$sidebar-width-mobile};
+
+  --app-bg: #{$app-bg};
+  --app-surface: #{$app-surface};
+  --app-text: #{$app-text};
+  --app-border: #{$border-gray};
+
+  --toolbar-bg: linear-gradient(180deg, #{$toolbar-gradient-start}, #{$toolbar-gradient-end});
+  --toolbar-text: #{$text-white};
+
+  --card-bg: #{$card-bg};
+  --card-border: #{$card-border};
+  --card-shadow: 0 6px 18px rgba(16,24,40,0.06);
+  --card-inset-shadow: #{$card-inset-shadow};
+
+  --app-primary: #{$primary-blue};
+
+  --login-bg: linear-gradient(
+      135deg,
+      rgba(#{$primary-blue}, 0.85),
+      rgba(#{$primary-green}, 0.75)
+    ),
+    url('/images/bagroundImage.jpg') center / cover no-repeat;
+
+  --glass-input-bg: rgba(255,255,255,0.15);
+  --glass-input-border: rgba(255,255,255,0.25);
+  --glass-input-focus-border: rgba(255,255,255,0.5);
+  --glass-placeholder: rgba(255,255,255,0.5);
+
+  --mdc-outlined-text-field-container-shape: #{$radius-md-75};
+  --mdc-outlined-text-field-container-color: var(--card-bg);
+  --mdc-outlined-text-field-focus-label-text-color: #{$primary-blue};
+}

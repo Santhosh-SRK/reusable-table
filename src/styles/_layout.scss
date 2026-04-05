@@ -1,0 +1,117 @@
+@use 'styleconstants' as *;
+
+
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav-container {
+  height: 100vh;
+  height: 100dvh;
+}
+
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+.content-area {
+  flex: 1;
+  min-height: 0; /* Critical for flex scroll */
+  // overflow: auto;
+}
+
+/* Prevent inner scrollbars */
+.sidenav-container .mat-drawer-inner-container {
+  overflow: hidden;
+}
+.toolbar-center {
+  @media (max-width: 768px) {
+    position: static !important;
+    transform: none !important;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.mat-tree {
+  display: block;
+  padding: #{$spacing-md-100};
+  border-radius: #{$radius-md-75};
+  border: 1px solid var(--card-border) !important;
+}
+
+.app-content {
+  flex: 1;
+  overflow: auto;
+}
+
+/* ─────────────────────── EMPTY STATE ─────────────────────── */
+.empty-state {
+  text-align: center !important;
+  padding: 1rem;
+  
+  &__icon {
+    font-size: 48px !important;
+    height: 48px!important;
+    width: 48px!important;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  &__text {
+    margin-bottom: 0;
+  }
+}
+
+/* ─────────────────────── BLUR BACKDROP OVERLAY ─────────────────────── */
+.bg-blur {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1050;
+}
+
+.modal-layer {
+  z-index: 1051;
+}
+
+/* ─────────────────────── ERROR ANIMATION ─────────────────────── */
+@keyframes errorGlow {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.error-icon-animated {
+  display: inline-flex;         
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  color: white;
+  background-color: #f44336;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.12em;
+  margin-right: 0.25rem;
+}
+
+mat-error {
+  display: flex;
+  align-items: center;
+  margin-top: -3px;
+  animation: errorGlow 2s ease-in-out infinite;
+}

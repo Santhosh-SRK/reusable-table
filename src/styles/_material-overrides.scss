@@ -1,0 +1,99 @@
+@use 'styleconstants' as *;
+
+mat-sidenav-content {
+  border-left: none !important;
+}
+
+// .mat-drawer,
+mat-sidenav {
+  border-right: none !important;
+}
+
+mat-sidenav-container,
+mat-sidenav-content {
+  background: var(--app-bg) !important;
+}
+mat-sidenav-container {
+  height: 100vh;
+  height: 100dvh; /* modern fix */
+}
+ mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+}
+// mat-card{
+//   padding: 16px !important;
+// }
+
+// mat-row,
+// mat-header-row {
+//   height: 10px !important;
+// }
+
+
+
+app-reusabletable .table-container {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+app-reusabletable table {
+  width: 100%;
+}
+
+.mat-mdc-form-field-icon-suffix > .mat-icon {
+  margin-bottom: 0;
+  padding:  8px 2px 0px
+}
+
+.mat-mdc-form-field-icon-suffix,
+[dir=rtl] .mat-mdc-form-field-icon-prefix {
+  padding: 0 8px 2px 0px !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper{
+  margin-bottom: -4px !important;
+}
+.mat-mdc-form-field-error{
+  display: none;
+}
+
+.role-compact-form .mat-mdc-icon-button.mat-mdc-button-base {
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+}
+
+.role-compact-form mat-form-field {
+  --mat-form-field-container-height: 34px;
+  --mat-form-field-container-vertical-padding: 5px;
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.role-compact-form .mat-mdc-text-field-wrapper {
+  min-height: 34px;
+}
+
+.role-compact-form .mat-mdc-form-field-infix {
+  min-height: 34px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.role-compact-form .mat-mdc-select-trigger,
+.role-compact-form .mat-mdc-select-value,
+.role-compact-form .mat-mdc-input-element {
+  font-size: 0.875rem;
+}
+
+.role-compact-form .mat-mdc-select-trigger {
+  height: auto;
+  align-items: center;
+}
+
+.role-compact-form .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}

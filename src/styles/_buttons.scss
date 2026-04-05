@@ -1,0 +1,56 @@
+@use 'styleconstants' as *;
+
+.app-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 44px;
+  padding: 0 1.5rem;
+  border-radius: 6px !important;
+  font-weight: 600;
+  text-transform: none !important;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12) !important;
+  // transition: 180ms ease;
+  transition: transform 180ms ease, //box-shadow 180ms ease;
+}
+
+.app-btn:hover {
+  // transform: translateY(-1px);
+    transform: scale(1.02);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18) !important;
+}
+
+.app-btn-primary {
+  background: linear-gradient(135deg, #{$btn-primary-start}, #{$btn-primary-end}) !important;
+  color: #{$text-white} !important;
+}
+
+.app-btn-success {
+  background: linear-gradient(135deg, #{$btn-success-start}, #{$btn-success-end}) !important;
+  color: #{$text-white} !important;
+}
+
+.app-btn-danger {
+  background: linear-gradient(135deg, #{$error-red}, #{$btn-danger-end}) !important;
+  color: #{$text-white} !important;
+}
+
+.app-btn-upload {
+  background: #eef4ff !important;
+  color: #2563eb !important;
+  border: 1px solid #c7d2fe !important;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.12) !important;
+}
+
+.app-btn-upload:hover {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.18) !important;
+}
+
+.app-btn-field {
+  height: 34px;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+}
