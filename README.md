@@ -20,7 +20,10 @@ A powerful and reusable Angular Material table component with support for dynami
 ```bash
 npm install @tasktrack/reusable-table
 ```
+---
+```bash
 Reffer User guide in code repository for deatiled explanation please
+```
 
 ---
 
