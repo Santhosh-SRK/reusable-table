@@ -14,6 +14,18 @@ A powerful and reusable Angular Material table component with support for dynami
 * ✅ Clean and customizable UI
 
 ---
+🔗 **Live Demo:**  
+👉 https://santhosh-srk.github.io/reusable-table/
+
+---
+
+## ✨ Overview
+
+This library was built to eliminate repeated table logic across applications by providing a highly configurable and reusable solution.
+
+It supports dynamic data rendering, advanced features like export and pagination, and clean integration into any Angular project.
+
+---
 
 ## 📦 Installation
 
