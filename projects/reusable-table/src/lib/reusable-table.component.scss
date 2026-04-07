@@ -276,9 +276,6 @@ table {
     margin-bottom: 0.25rem;
     text-transform: uppercase;
 
-    @media (max-width: 768px) {
-      display: block;
-    }
   }
 
   // Cell value
@@ -368,77 +365,7 @@ table {
   }
 }
 
-@media (max-width: 768px) {
-  table {
-    .mat-mdc-cell,
-    .mat-mdc-header-cell {
-      padding: 0.375rem;
-      font-size: 0.75rem;
-    }
 
-    .cell-label {
-      display: block !important;
-    }
-
-    .actions-cell {
-      flex-wrap: wrap;
-      gap: 0.25rem;
-
-      button[mat-icon-button] {
-        padding: 0 0.125rem !important;
-
-        mat-icon {
-          font-size: 16px;
-          width: 16px;
-          height: 16px;
-        }
-      }
-    }
-  }
-
-  .mattable-toolbar {
-    height: 48px;
-    padding: 0.5rem !important;
-  }
-
-  // Mobile paginator styling
-  .mat-mdc-paginator {
-    padding: 0.5rem !important;
-    
-    .mat-mdc-paginator-container {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .mat-mdc-paginator-page-size {
-      width: 100%;
-      flex-wrap: wrap;
-    }
-
-    .mat-mdc-paginator-range-actions {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mat-mdc-paginator-range-label {
-      margin: 0;
-      font-size: 0.75rem;
-    }
-
-    .mat-mdc-icon-button {
-      padding: 0 0.25rem !important;
-      
-      mat-icon {
-        font-size: 18px !important;
-        width: 18px !important;
-        height: 18px !important;
-      }
-    }
-  }
-}
 
 // ───────────────────────── PAGINATOR STYLING ─────────────────────────
 
@@ -1026,10 +953,7 @@ table {
   overflow: hidden;
   animation: slideUp 0.3s ease;
 
-  @media (max-width: 768px) {
-    width: 95%;
-    max-width: 100%;
-  }
+ 
 }
 
 @keyframes slideUp {
@@ -1232,4 +1156,124 @@ table {
       }
     }
   }
+}
+/* ================= MOBILE CARD VIEW FIX (ADD ONLY) ================= */
+
+@media (max-width: 768px) {
+
+  /* ===== Toolbar (keep your behavior) ===== */
+  .mattable-toolbar {
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .mattable-toolbar .center {
+    flex: 1;
+    text-align: center;
+  }
+
+  .mattable-toolbar .center p {
+    font-size: 13px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mattable-toolbar>.left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mattable-toolbar>.right {
+    flex-shrink: 0;
+  }
+
+  .mattable-toolbar mat-button-toggle-group {
+    transform: scale(0.85);
+    transform-origin: right center;
+  }
+
+  /* ===== Hide paginator ===== */
+  .mat-mdc-paginator {
+    display: none !important;
+  }
+
+  /* ===== Hide header ===== */
+  .mattable-container .mat-mdc-header-row {
+    // display: none !important;
+  }
+
+  /* ===== ROW (CARD STYLE — YOUR ORIGINAL DESIGN) ===== */
+  .mattable-container .mat-mdc-row {
+    display: block !important;
+    margin: 8px 0;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+
+    height: auto !important;
+    min-height: unset !important;
+  }
+
+  /* ===== CELL LAYOUT ===== */
+  .mattable-container .mat-mdc-cell {
+    display: flex !important;
+    justify-content: space-between !important; /* 🔥 KEY FIX */
+    align-items: center;
+    width: 100%;
+    padding: 8px 0 !important;
+  }
+
+  /* ===== LABEL ===== */
+  .mattable-container .cell-label {
+    flex: 0 0 45%;   /* 🔥 alignment fix */
+    display: block;
+    font-weight: 600;
+    color: #000;
+    font-size: 0.75rem;
+
+    white-space: nowrap;
+  }
+
+  /* ===== VALUE ===== */
+  .mattable-container .cell-value {
+    margin-left: auto !important;
+    text-align: right !important;
+    min-width: 0;
+
+    white-space: nowrap;         /* 🔥 FIX TEXT BREAK */
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== ACTIONS ===== */
+  .mattable-container .actions-cell {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #eee;
+    margin-top: 8px;
+  }
+
+  /* ===== HIDE DESKTOP ONLY ===== */
+  .mattable-container .desktop-only {
+    display: none;
+  }
+
+  /* ===== REMOVE TEXT BREAK ISSUES ===== */
+  .mat-mdc-cell,
+  .mat-mdc-header-cell {
+    word-break: normal !important;
+  }
+
 }
